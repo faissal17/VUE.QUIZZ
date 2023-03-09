@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
+var incorrectAnswers = [];
 const questions = ref([
   {
     question:
@@ -25,97 +26,97 @@ const questions = ref([
     ],
     selected: null,
   },
-  {
-    question:
-      "Which AWS offering enables users to find, buy, and immediately start using software solutions in theirAWS environment?",
-    answer: 3,
-    options: ["AWS Config", "AWS OpsWorks", "AWS SDK", "AWS Marketplace"],
-    selected: null,
-  },
-  {
-    question:
-      "Which AWS networking service enables a company to create a virtual network within AWS?",
-    answer: 3,
-    options: [
-      "AWS Config",
-      "Amazon Route 53",
-      "AWS Direct Connect",
-      "Amazon Virtual Private Cloud (Amazon VPC)",
-    ],
-    selected: null,
-  },
-  {
-    question:
-      "Which of the following is an AWS responsibility under the AWS shared responsibility model?",
-    answer: 1,
-    options: [
-      "Configuring third-party applications",
-      "Maintaining physical hardware",
-      "Securing application access and data",
-      "Managing guest operating systems",
-    ],
-    selected: null,
-  },
-  {
-    question:
-      "Which component of the AWS global infrastructure does Amazon CloudFront use to ensure low-latency delivery?",
-    answer: 1,
-    options: [
-      "AWS Regions",
-      "Edge locations",
-      "Availability Zones",
-      "Virtual Private Cloud (VPC)",
-    ],
-    selected: null,
-  },
-  {
-    question:
-      "How would a system administrator add an additional layer of login security to a user's AWS Management Console?",
-    answer: 2,
-    options: [
-      "Use Amazon Cloud Directory",
-      "Audit AWS Identity and Access Management (IAM) roles",
-      "Enable multi-factor authentication",
-      "Enable AWS CloudTrail",
-    ],
-    selected: null,
-  },
-  {
-    question:
-      "Which service can identify the user that made the API call when an Amazon EC2 instance is terminated?",
-    answer: 1,
-    options: [
-      "AWS Trusted Advisor",
-      "AWS CloudTrail",
-      "AWS X-Ray",
-      "AWS Identity and Access Management (AWS IAM)",
-    ],
-    selected: null,
-  },
-  {
-    question:
-      "Which service would be used to send alerts based on Amazon CloudWatch alarms?",
-    answer: 3,
-    options: [
-      "Amazon Simple Notification Service (Amazon SNS)",
-      "AWS CloudTrail",
-      "AWS Trusted Advisor",
-      "Amazon Route 53",
-    ],
-    selected: null,
-  },
-  {
-    question:
-      "Where can a user find information about prohibited actions on the AWS infrastructure?",
-    answer: 3,
-    options: [
-      "AWS Trusted Advisor",
-      "AWS Identity and Access Management (IAM)",
-      "AWS Billing Console",
-      "AWS Acceptable Use Policy",
-    ],
-    selected: null,
-  },
+  // {
+  //   question:
+  //     "Which AWS offering enables users to find, buy, and immediately start using software solutions in theirAWS environment?",
+  //   answer: 3,
+  //   options: ["AWS Config", "AWS OpsWorks", "AWS SDK", "AWS Marketplace"],
+  //   selected: null,
+  // },
+  // {
+  //   question:
+  //     "Which AWS networking service enables a company to create a virtual network within AWS?",
+  //   answer: 3,
+  //   options: [
+  //     "AWS Config",
+  //     "Amazon Route 53",
+  //     "AWS Direct Connect",
+  //     "Amazon Virtual Private Cloud (Amazon VPC)",
+  //   ],
+  //   selected: null,
+  // },
+  // {
+  //   question:
+  //     "Which of the following is an AWS responsibility under the AWS shared responsibility model?",
+  //   answer: 1,
+  //   options: [
+  //     "Configuring third-party applications",
+  //     "Maintaining physical hardware",
+  //     "Securing application access and data",
+  //     "Managing guest operating systems",
+  //   ],
+  //   selected: null,
+  // },
+  // {
+  //   question:
+  //     "Which component of the AWS global infrastructure does Amazon CloudFront use to ensure low-latency delivery?",
+  //   answer: 1,
+  //   options: [
+  //     "AWS Regions",
+  //     "Edge locations",
+  //     "Availability Zones",
+  //     "Virtual Private Cloud (VPC)",
+  //   ],
+  //   selected: null,
+  // },
+  // {
+  //   question:
+  //     "How would a system administrator add an additional layer of login security to a user's AWS Management Console?",
+  //   answer: 2,
+  //   options: [
+  //     "Use Amazon Cloud Directory",
+  //     "Audit AWS Identity and Access Management (IAM) roles",
+  //     "Enable multi-factor authentication",
+  //     "Enable AWS CloudTrail",
+  //   ],
+  //   selected: null,
+  // },
+  // {
+  //   question:
+  //     "Which service can identify the user that made the API call when an Amazon EC2 instance is terminated?",
+  //   answer: 1,
+  //   options: [
+  //     "AWS Trusted Advisor",
+  //     "AWS CloudTrail",
+  //     "AWS X-Ray",
+  //     "AWS Identity and Access Management (AWS IAM)",
+  //   ],
+  //   selected: null,
+  // },
+  // {
+  //   question:
+  //     "Which service would be used to send alerts based on Amazon CloudWatch alarms?",
+  //   answer: 3,
+  //   options: [
+  //     "Amazon Simple Notification Service (Amazon SNS)",
+  //     "AWS CloudTrail",
+  //     "AWS Trusted Advisor",
+  //     "Amazon Route 53",
+  //   ],
+  //   selected: null,
+  // },
+  // {
+  //   question:
+  //     "Where can a user find information about prohibited actions on the AWS infrastructure?",
+  //   answer: 3,
+  //   options: [
+  //     "AWS Trusted Advisor",
+  //     "AWS Identity and Access Management (IAM)",
+  //     "AWS Billing Console",
+  //     "AWS Acceptable Use Policy",
+  //   ],
+  //   selected: null,
+  // },
 ]);
 const quizCompleted = ref(false);
 const currentQuestion = ref(0);
@@ -124,8 +125,8 @@ const score = computed(() => {
   questions.value.map((q) => {
     if (q.selected != null && q.answer == q.selected) {
       value++;
-    } else {
-      incorrectAnswers.push(q); // Add incorrect answer to array
+    } else if (q.answer != q.selected) {
+      incorrectAnswers.push(q);
     }
   });
   return value;
@@ -154,7 +155,6 @@ export default {
     return {
       show: true,
       name: "",
-      incorrectAnswers: [],
     };
   },
   methods: {
@@ -246,6 +246,16 @@ export default {
         <h2>Congratulation, {{ name }} You have finished the quiz!</h2>
         <p>Your score is {{ score }}/{{ questions.length }}</p>
       </section>
+      <div>
+        <ul>
+          <li v-for="(question, index) in incorrectAnswers" :key="index">
+            <p>{{ question.text }}</p>
+            <p>The question : {{ question.question }}</p>
+            <p>Correct answer : {{ question.options[question.answer] }}</p>
+            <p>Your answer : {{ question.options[question.selected] }}</p>
+          </li>
+        </ul>
+      </div>
     </mian>
   </div>
 </template>
