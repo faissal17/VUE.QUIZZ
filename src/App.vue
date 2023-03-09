@@ -124,6 +124,8 @@ const score = computed(() => {
   questions.value.map((q) => {
     if (q.selected != null && q.answer == q.selected) {
       value++;
+    } else {
+      incorrectAnswers.push(q); // Add incorrect answer to array
     }
   });
   return value;
@@ -142,7 +144,6 @@ const NextQuestion = () => {
     currentQuestion.value++;
     return;
   }
-
   quizCompleted.value = true;
 };
 </script>
@@ -153,12 +154,24 @@ export default {
     return {
       show: true,
       name: "",
+      incorrectAnswers: [],
     };
   },
   methods: {
     toggle() {
       this.show = !this.show;
     },
+    onKeyDown(event) {
+      // Check if the user pressed "Ctrl + R" or "Cmd + R" (on Mac)
+      if ((event.ctrlKey || event.metaKey) && event.keyCode === 82) {
+        // Prevent the default behavior
+        event.preventDefault();
+      }
+    },
+  },
+  mounted() {
+    // Add a keydown event listener to the document
+    document.addEventListener("keydown", this.onKeyDown);
   },
 };
 </script>
@@ -166,7 +179,14 @@ export default {
 <template>
   <!-- div centred -->
   <div v-if="show" class="division">
-    <input class="inp" type="text" name="name" id="name" v-model="name" />
+    <input
+      class="inp"
+      type="text"
+      name="name"
+      id="name"
+      v-model="name"
+      placeholder="Enter your name"
+    />
     <button type="submit" v-on:click="toggle" class="botn">
       start the quiz
     </button>
@@ -222,7 +242,6 @@ export default {
           }}
         </button>
       </section>
-
       <section v-else>
         <h2>Congratulation, {{ name }} You have finished the quiz!</h2>
         <p>Your score is {{ score }}/{{ questions.length }}</p>
