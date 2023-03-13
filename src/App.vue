@@ -1,5 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
+import "./assets/main.css";
+
 var incorrectAnswers = [];
 const questions = ref([
   {
@@ -12,6 +14,7 @@ const questions = ref([
       "Amazon EC2 instances can be launched on demand when needed.",
       "Users can permanently run enough instances to handle peak workloads",
     ],
+    just: "The ability to launch instances on demand when needed allows users to launch and terminate instances in response to a varying workload. This is a more economical practice than purchasing enough on-premises servers to handle the peak load",
     selected: null,
   },
   {
@@ -24,99 +27,108 @@ const questions = ref([
       "Amazon EC2",
       "Amazon AppStream 2.0",
     ],
+    just: "AWS DMS helps users migrate databases to AWS quickly and securely. The source database remains fully operational during the migration, minimizing downtime to applications that rely on the database. AWS DMS can migrate data to and from most widely used commercial and open-source databases",
     selected: null,
   },
-  // {
-  //   question:
-  //     "Which AWS offering enables users to find, buy, and immediately start using software solutions in theirAWS environment?",
-  //   answer: 3,
-  //   options: ["AWS Config", "AWS OpsWorks", "AWS SDK", "AWS Marketplace"],
-  //   selected: null,
-  // },
-  // {
-  //   question:
-  //     "Which AWS networking service enables a company to create a virtual network within AWS?",
-  //   answer: 3,
-  //   options: [
-  //     "AWS Config",
-  //     "Amazon Route 53",
-  //     "AWS Direct Connect",
-  //     "Amazon Virtual Private Cloud (Amazon VPC)",
-  //   ],
-  //   selected: null,
-  // },
-  // {
-  //   question:
-  //     "Which of the following is an AWS responsibility under the AWS shared responsibility model?",
-  //   answer: 1,
-  //   options: [
-  //     "Configuring third-party applications",
-  //     "Maintaining physical hardware",
-  //     "Securing application access and data",
-  //     "Managing guest operating systems",
-  //   ],
-  //   selected: null,
-  // },
-  // {
-  //   question:
-  //     "Which component of the AWS global infrastructure does Amazon CloudFront use to ensure low-latency delivery?",
-  //   answer: 1,
-  //   options: [
-  //     "AWS Regions",
-  //     "Edge locations",
-  //     "Availability Zones",
-  //     "Virtual Private Cloud (VPC)",
-  //   ],
-  //   selected: null,
-  // },
-  // {
-  //   question:
-  //     "How would a system administrator add an additional layer of login security to a user's AWS Management Console?",
-  //   answer: 2,
-  //   options: [
-  //     "Use Amazon Cloud Directory",
-  //     "Audit AWS Identity and Access Management (IAM) roles",
-  //     "Enable multi-factor authentication",
-  //     "Enable AWS CloudTrail",
-  //   ],
-  //   selected: null,
-  // },
-  // {
-  //   question:
-  //     "Which service can identify the user that made the API call when an Amazon EC2 instance is terminated?",
-  //   answer: 1,
-  //   options: [
-  //     "AWS Trusted Advisor",
-  //     "AWS CloudTrail",
-  //     "AWS X-Ray",
-  //     "AWS Identity and Access Management (AWS IAM)",
-  //   ],
-  //   selected: null,
-  // },
-  // {
-  //   question:
-  //     "Which service would be used to send alerts based on Amazon CloudWatch alarms?",
-  //   answer: 3,
-  //   options: [
-  //     "Amazon Simple Notification Service (Amazon SNS)",
-  //     "AWS CloudTrail",
-  //     "AWS Trusted Advisor",
-  //     "Amazon Route 53",
-  //   ],
-  //   selected: null,
-  // },
-  // {
-  //   question:
-  //     "Where can a user find information about prohibited actions on the AWS infrastructure?",
-  //   answer: 3,
-  //   options: [
-  //     "AWS Trusted Advisor",
-  //     "AWS Identity and Access Management (IAM)",
-  //     "AWS Billing Console",
-  //     "AWS Acceptable Use Policy",
-  //   ],
-  //   selected: null,
-  // },
+  {
+    question:
+      "Which AWS offering enables users to find, buy, and immediately start using software solutions in theirAWS environment?",
+    answer: 3,
+    options: ["AWS Config", "AWS OpsWorks", "AWS SDK", "AWS Marketplace"],
+    just: "AWS Marketplace is a digital catalog with thousands of software listings from independent software vendors that makes it easy to find, test, buy, and deploy software that runs on AWS to applications that rely on the database. AWS DMS can migrate data to and from most widely used commercial and open-source databases",
+    selected: null,
+  },
+  {
+    question:
+      "Which AWS networking service enables a company to create a virtual network within AWS?",
+    answer: 3,
+    options: [
+      "AWS Config",
+      "Amazon Route 53",
+      "AWS Direct Connect",
+      "Amazon Virtual Private Cloud (Amazon VPC)",
+    ],
+    just: "Amazon VPC lets users provision a logically isolated section of the AWS Cloud where users can launch AWS resources in a virtual network that they define",
+    selected: null,
+  },
+  {
+    question:
+      "Which of the following is an AWS responsibility under the AWS shared responsibility model?",
+    answer: 1,
+    options: [
+      "Configuring third-party applications",
+      "Maintaining physical hardware",
+      "Securing application access and data",
+      "Managing guest operating systems",
+    ],
+    just: "Maintaining physical hardware is an AWS responsibility under the AWS shared responsibility model.",
+    selected: null,
+  },
+  {
+    question:
+      "Which component of the AWS global infrastructure does Amazon CloudFront use to ensure low-latency delivery?",
+    answer: 1,
+    options: [
+      "AWS Regions",
+      "Edge locations",
+      "Availability Zones",
+      "Virtual Private Cloud (VPC)",
+    ],
+    just: "To deliver content to users with lower latency, Amazon CloudFront uses a global network of points of presence (edge locations and regional edge caches) worldwide.",
+    selected: null,
+  },
+  {
+    question:
+      "How would a system administrator add an additional layer of login security to a user's AWS Management Console?",
+    answer: 2,
+    options: [
+      "Use Amazon Cloud Directory",
+      "Audit AWS Identity and Access Management (IAM) roles",
+      "Enable multi-factor authentication",
+      "Enable AWS CloudTrail",
+    ],
+    just: "Multi-factor authentication (MFA) is a simple best practice that adds an extra layer of protection on top of a username and password. With MFA enabled, when a user signs in to an AWS Management Console, they will be prompted for their username and password (the first factor—what they know), as well as for an authentication code from their MFA device (the second factor—what they have). Taken together, these multiple factors provide increased security for AWS account settings and resources.",
+    selected: null,
+  },
+  {
+    question:
+      "Which service can identify the user that made the API call when an Amazon EC2 instance is terminated?",
+    answer: 1,
+    options: [
+      "AWS Trusted Advisor",
+      "AWS CloudTrail",
+      "AWS X-Ray",
+      "AWS Identity and Access Management (AWS IAM)",
+    ],
+    just: "AWS CloudTrail helps users enable governance, compliance, and operational and risk auditing of their AWS accounts. Actions taken by a user, role, or an AWS service are recorded as events in CloudTrail. Events include actions taken in the AWS Management Console, AWS Command Line Interface (CLI), and AWS SDKs and APIs.",
+    selected: null,
+  },
+  {
+    question:
+      "Which service would be used to send alerts based on Amazon CloudWatch alarms?",
+    answer: 3,
+    options: [
+      "Amazon Simple Notification Service (Amazon SNS)",
+      "AWS CloudTrail",
+      "AWS Trusted Advisor",
+      "Amazon Route 53",
+    ],
+    just: "Amazon SNS and Amazon CloudWatch are integrated so users can collect, view, and analyze metrics for every active SNS. Once users have configured CloudWatch for Amazon SNS, they can gain better insight into the performance of their Amazon SNS topics, push notifications, and SMS deliveries",
+    selected: null,
+  },
+  {
+    question:
+      "Where can a user find information about prohibited actions on the AWS infrastructure?",
+    answer: 3,
+    options: [
+      "AWS Trusted Advisor",
+      "AWS Identity and Access Management (IAM)",
+      "AWS Billing Console",
+      "AWS Acceptable Use Policy",
+    ],
+    just: "The AWS Acceptable Use Policy provides information regarding prohibited actions on the AWS infrastructure.",
+    selected: null,
+  },
 ]);
 const quizCompleted = ref(false);
 const currentQuestion = ref(0);
@@ -155,22 +167,29 @@ export default {
     return {
       show: true,
       name: "",
+      inputError: "",
     };
   },
   methods: {
     toggle() {
-      this.show = !this.show;
+      if (this.name) {
+        this.show = !this.show;
+      } else if (!this.name) {
+        this.inputError = "This field is required.";
+      } else {
+        this.inputError = "";
+      }
     },
     onKeyDown(event) {
-      // Check if the user pressed "Ctrl + R" or "Cmd + R" (on Mac)
       if ((event.ctrlKey || event.metaKey) && event.keyCode === 82) {
-        // Prevent the default behavior
         event.preventDefault();
       }
     },
+    reloadPage() {
+      window.location.reload();
+    },
   },
   mounted() {
-    // Add a keydown event listener to the document
     document.addEventListener("keydown", this.onKeyDown);
   },
 };
@@ -190,6 +209,7 @@ export default {
     <button type="submit" v-on:click="toggle" class="botn">
       start the quiz
     </button>
+    <span v-if="inputError" class="error">{{ inputError }}</span>
   </div>
   <!-- div centred -->
   <div v-else>
@@ -244,18 +264,24 @@ export default {
       </section>
       <section v-else>
         <h2>Congratulation, {{ name }} You have finished the quiz!</h2>
-        <p>Your score is {{ score }}/{{ questions.length }}</p>
+        <p class="scr">Your score is {{ score }}/{{ questions.length }}</p>
+        <div>
+          <ul>
+            <li v-for="(question, index) in incorrectAnswers" :key="index">
+              <p>{{ question.text }}</p>
+              <p>The question : {{ question.question }}</p>
+              <p class="correct">
+                Correct answer : {{ question.options[question.answer] }}
+              </p>
+              <p class="your">
+                Your answer : {{ question.options[question.selected] }}
+              </p>
+              <p class="just">justification : {{ question.just }}</p>
+            </li>
+          </ul>
+        </div>
+        <button class="reload-button" @click="reloadPage">Restart</button>
       </section>
-      <div>
-        <ul>
-          <li v-for="(question, index) in incorrectAnswers" :key="index">
-            <p>{{ question.text }}</p>
-            <p>The question : {{ question.question }}</p>
-            <p>Correct answer : {{ question.options[question.answer] }}</p>
-            <p>Your answer : {{ question.options[question.selected] }}</p>
-          </li>
-        </ul>
-      </div>
     </mian>
   </div>
 </template>
